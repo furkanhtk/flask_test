@@ -120,7 +120,7 @@ def parameter_page(parameter_id):
         if parameter is None:
             abort(404)
         return render_template("parameter.html", parameter=parameter,graphJSON=graphJSON)
-    elif parameter.mode is "Calibration Free Space":
+    elif parameter.mode == "Calibration Free Space":
         engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
         Base.metadata.bind = engine
         DBSession = sessionmaker(bind=engine)
@@ -129,16 +129,7 @@ def parameter_page(parameter_id):
         if parameter is None:
             abort(404)
         return render_template("parameter_calibrate.html", parameter=parameter)
-    elif parameter.mode is "Calibration Cable":
-        engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
-        Base.metadata.bind = engine
-        DBSession = sessionmaker(bind=engine)
-        session = DBSession()
-        parameter = models.get_parameter(session, parameter_id)
-        if parameter is None:
-            abort(404)
-        return render_template("parameter_calibrate.html", parameter=parameter)
-    else:
+    elif parameter.mode == "Calibration Cable":
         engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
         Base.metadata.bind = engine
         DBSession = sessionmaker(bind=engine)
