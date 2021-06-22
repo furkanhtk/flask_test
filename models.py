@@ -4,6 +4,12 @@ from database import Parameters, Base
 import datetime
 
 
+def listToString(results):
+    str1 = ""
+    for ele in results:
+        str1 += str(ele)+","
+    return str1
+
 
 def get_parameters(session):
     parameters_list = session.query(Parameters).all()
@@ -11,11 +17,22 @@ def get_parameters(session):
 
 
 
-def add_parameter(session, freq, pwr,g_ref,distance,antenna_type,mode):
-    parameter_to_add = Parameters(input_frequency=freq, input_Power=pwr, date=datetime.datetime.now().strftime("%Y-%m-%d-%X"), g_ref=g_ref, distance=distance, antenna_type=antenna_type, mode=mode)
+def add_parameter(session, freq, pwr,sample_size,g_ref,distance,antenna_type,mode):
+    parameter_to_add = Parameters(input_frequency=freq, input_Power=pwr, sample_size=sample_size, date=datetime.datetime.now().strftime("%Y-%m-%d-%X"), g_ref=g_ref, distance=distance, antenna_type=antenna_type,mode=mode)
     session.add(parameter_to_add)
     session.commit()
     # session.query(Parameters).first()
+
+def add_results(session,id_number,raw_measured_power,beamwidth,bandwidth,antenna_gain,directivity_tai,directivity_kraus):
+    edited_parameter = session.query(Parameters).filter_by(id=id_number).one()
+    edited_parameter.raw_measured_power = listToString(raw_measured_power)
+    edited_parameter.beamwidth=beamwidth
+    edited_parameter.bandwidth=bandwidth
+    edited_parameter.antenna_gain=antenna_gain
+    edited_parameter.directivity_tai=directivity_tai
+    edited_parameter.directivity_kraus=directivity_kraus
+    session.add(edited_parameter)
+    session.commit()
 
 
 def update_parameter(session, id_number, freq, pwr):

@@ -1,0 +1,39 @@
+
+{% extends "layout.html" %}
+{% block title %}Process_Measurement{% endblock %}
+{% block content %}
+    <h1 class="title">Process_Measurement</h1>
+
+    <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+    <div id="successAlert2"</div>
+
+
+    <script type=text/javascript>
+$(document).ready(function() {
+
+    function getChatMessages() {
+    		$.ajax({
+			data : {
+				name : $('#nameInput').val(),
+			},
+			type : 'POST',
+			url : '/data'
+		})
+
+        .done(function (data) {
+            $('#successAlert2').text(data.status_value).show();
+
+
+        }).always(function () {
+            window.setTimeout(getChatMessages, 1000);
+        });
+        return data.status_value;
+    }
+
+    getChatMessages();
+});
+</script>
+
+{% endblock %}

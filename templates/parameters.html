@@ -1,67 +1,16 @@
 {% extends "layout.html" %}
 {% block title %}Parameters list{% endblock %}
 {% block content %}
+
+
+<!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+
+    <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+
     <h1 class="title">Parameters</h1>
-    <form action="" method="post" name="parameter_edit">
-      <div class="field">
-        <label for="frequency" class="label">Frequency</label>
-        <div class="control">
-          <input type="text" name="frequency" class="input" required="required"/>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="power" class="label">Power</label>
-        <div class="control">
-          <input type="number" name="power" class="input" required="required"/>
-        </div>
-      </div>
-
-        <div class="field">
-        <label for="g_ref" class="label">Gref</label>
-        <div class="control">
-          <input type="number" name="g_ref" class="input" required="required"/>
-        </div>
-      </div>
-
-        <div class="field">
-        <label for="distance" class="label">Distance</label>
-        <div class="control">
-          <input type="number" name="distance" class="input" required="required"/>
-        </div>
-      </div>
-
-
-        <div class="field">
-        <label for="mode" class="label">Mode</label>
-        <label class="checkbox">
-              <input type="checkbox" name="mode1" value="1" /> Calibration Cable
-        </label>
-            <label class="checkbox">
-              <input type="checkbox" name="mode2" value="2"  /> Calibration Free Space
-        </label>
-            <label class="checkbox">
-              <input type="checkbox" name="mode3" value="3" /> Measurement
-        </label>
-      </div>
-
-
-        <div class="field">
-        <label for="antenna_type" class="label">Antenna Type</label>
-        <div class="control">
-          <input type="text" name="antenna_type" class="input" required="required"/>
-        </div>
-      </div>
-
-
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-danger is-small" type="submit" name="Add" value="Add"> Add </button>
-        </div>
-      </div>
-    </form>
-
-
     {% if parameters %}
     <form action="" method="post" name="parameter_list">
     <table class="table is-striped is-fullwidth">

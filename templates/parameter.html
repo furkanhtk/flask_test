@@ -37,5 +37,44 @@
         <th>Mode :</th>
         <td>{{ parameter.mode }}</td>
       </tr>
+         <tr>
+        <th>Sample size :</th>
+        <td>{{ parameter.sample_size }}</td>
+      </tr>
+         <tr>
+        <th>Measured power :</th>
+        <td>{{ parameter.raw_measured_power }}</td>
+      </tr>
+         <tr>
+        <th>Beamwidth :</th>
+        <td>{{ parameter.beamwidth }}</td>
+      </tr>
+         <tr>
+        <th>Bandwidth :</th>
+        <td>{{ parameter.bandwidth }}</td>
+      </tr>
+         <tr>
+        <th>Gain :</th>
+        <td>{{ parameter.antenna_gain }}</td>
+      </tr>
+         <tr>
+        <th>Directivity Tai and Pereira :</th>
+        <td>{{ parameter.directivity_tai }}</td>
+      </tr>
+         <tr>
+        <th>Directivity Kraus :</th>
+        <td>{{ parameter.directivity_kraus }}</td>
+      </tr>
     </table>
+
+
+        <div id="chart" class="chart"></div>
+
+
+    <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
+<!--    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script type="text/javascript">
+        var graphs = {{graphJSON | safe}};
+        Plotly.plot('chart',graphs,{});
+    </script>
 {% endblock %}

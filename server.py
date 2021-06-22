@@ -3,17 +3,17 @@ import views
 
 
 
-# <meta http-equiv="refresh" content="1" >
-
 def create_app():
     app = Flask(__name__)
     app.config.from_object("settings")
     app.add_url_rule("/", view_func=views.home_page)
-    app.add_url_rule("/Measurement", view_func=views.Measurement_page)
     app.add_url_rule("/parameters", view_func=views.parameters_page, methods=["GET", "POST"])
     app.add_url_rule("/parameters/<int:parameter_id>", view_func=views.parameter_page)
-    app.add_url_rule("/test", view_func=views.test, methods=["GET", "POST"])
-    app.add_url_rule("/data", view_func=views.data, methods=["GET", "POST"])
+    app.add_url_rule("/Measurement", view_func=views.Measurement_page, methods=["GET", "POST"])
+    app.add_url_rule("/Calibration_fs", view_func=views.Calibration_fs_page, methods=["GET", "POST"])
+    app.add_url_rule("/Calibration_cable", view_func=views.Calibration_cable_page, methods=["GET", "POST"])
+    app.add_url_rule("/Process_Measurement", view_func=views.Process_Measurement_page, methods=["GET", "POST"])
+    app.add_url_rule("/data", view_func=views.data_func, methods=["GET", "POST"])
     return app
 
 
