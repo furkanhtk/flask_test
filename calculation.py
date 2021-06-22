@@ -54,8 +54,6 @@ def bandwidth_6dB(results):
 
 def gain_calculator(frequency, input_power, gref, distance,results):
     data = np.array(results)
-    frequency = (float(frequency.strip(string.ascii_letters)))
-    input_power = (int(input_power.strip(string.ascii_letters)))
     Pr = np.sum(data)
     wavelength = 1/frequency
     gain = (Pr*pow(4*np.pi*distance, 2))/(input_power*gref*pow(wavelength, 2))
