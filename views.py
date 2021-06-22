@@ -141,7 +141,7 @@ def Process_Measurement_page():
     status = "Measurement completed, calculations in progress"
     print(status)
     data_func(status)
-    beamwidth_value, bandwidth_6dB_value, gain, kraus, tai_pereira = calculation.total_calculation(results,input_frequency,input_Power, parameter.gref, parameter.distance)
+    beamwidth_value, bandwidth_6dB_value, gain, kraus, tai_pereira = calculation.total_calculation(results,input_frequency,input_Power, parameter.g_ref, parameter.distance)
     beamwidth_value = float(beamwidth_value[0])
     bandwidth_6dB_value = float(bandwidth_6dB_value[0])
     kraus = float(kraus[0])
