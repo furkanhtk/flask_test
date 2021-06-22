@@ -155,10 +155,10 @@ def Process_Measurement_page():
 
 def parse_frequency(value):
     value = value.lower()
-    if "ghz" in test:
+    if "ghz" in value:
         frequency = (float(value.strip(string.ascii_letters)))
         frequency = int(frequency * (10 ** 9))
-    elif "mhz" in test:
+    elif "mhz" in value:
         frequency = (float(value.strip(string.ascii_letters)))
         frequency = int(frequency * (10 ** 6))
     else:
