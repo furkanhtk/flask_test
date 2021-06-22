@@ -155,7 +155,7 @@ def Process_Measurement_page():
     input_frequency=parse_frequency(parameter.input_Power)
     status = "Parameters received"
     print(status)
-    results = control.Measurement_Antenna(input_frequency,input_Power, parameter.sample_size)
+    results = np.genfromtxt("dipole_pattern.csv", delimiter=',')
     status = "Measurement completed, calculations in progress"
     print(status)
     beamwidth_value, bandwidth_6dB_value, gain, kraus, tai_pereira = calculation.total_calculation(results,input_frequency,input_Power, parameter.g_ref, parameter.distance)
