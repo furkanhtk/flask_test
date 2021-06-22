@@ -108,7 +108,7 @@ def parameter_page(parameter_id):
     session = DBSession()
     parameter = models.get_parameter(session, parameter_id)
     print("Here")
-    if parameter.mode is "Measurement":
+    if parameter.mode == "Measurement":
         print("Here")
         raw_data = np.fromstring(parameter.raw_measured_power, dtype=float, sep=',')
         theta = np.arange(0, 361, 1)
