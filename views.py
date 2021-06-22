@@ -2,10 +2,8 @@ from datetime import datetime
 from flask import *
 import models
 from database import Base,Parameters
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-########################
 import plotly.express as px
 import numpy as np
 import plotly
@@ -157,6 +155,61 @@ def Process_Measurement_page():
     return redirect(url_for("parameters_page"))
 
 
+
+def Process_CalibrationCable_page():
+    status = "Calibration cable started"
+    print(status)
+    engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
+    Base.metadata.bind = engine
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    parameters_list = models.get_parameters(session)
+    id_list=[]
+    for parameter in parameters_list:
+        id_list.append(parameter.id)
+    parameter=models.get_parameter(session, id_list[-1])
+    input_Power=int(parameter.input_Power)
+    input_frequency=parse_frequency(parameter.input_Power)
+    status = "Parameters received"
+    print(status)
+    results = control.Calibration_Cable(input_frequency,input_Power, parameter.sample_size)
+    str1 = ""
+    for ele in results:
+        str1 += str(ele) + ","
+    results_str = str1
+    models.add_results(session,id_list[-1],results_str,0, 0, 0, 0, 0)
+    status = "Calibration completed"
+    print(status)
+    return redirect(url_for("parameters_page"))
+
+
+def Process_CalibrationFreeSpace_page():
+    status = "Calibration cable started"
+    print(status)
+    engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
+    Base.metadata.bind = engine
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    parameters_list = models.get_parameters(session)
+    id_list=[]
+    for parameter in parameters_list:
+        id_list.append(parameter.id)
+    parameter=models.get_parameter(session, id_list[-1])
+    input_Power=int(parameter.input_Power)
+    input_frequency=parse_frequency(parameter.input_Power)
+    status = "Parameters received"
+    print(status)
+    results = control.Calibration_Free_Space(input_frequency,input_Power, parameter.sample_size)
+    str1 = ""
+    for ele in results:
+        str1 += str(ele) + ","
+    results_str = str1
+    models.add_results(session,id_list[-1],results_str,0, 0, 0, 0, 0)
+    status = "Calibration completed"
+    print(status)
+    return redirect(url_for("parameters_page"))
+
+
 def parse_frequency(value):
     value = value.lower()
     if "ghz" in value:
@@ -168,8 +221,3 @@ def parse_frequency(value):
     else:
         frequency = (int(value.strip(string.ascii_letters)))
     return frequency
-
-
-def data_func(status):
-    veri2 = status
-    return jsonify({'status_value': veri2})

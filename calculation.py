@@ -3,11 +3,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def process_start():
-    veri3 = "Measurement Started"
-
-    return jsonify({'test3': veri3})
-
 
 def find_nearest(array, value):
     array = np.asarray(array)
@@ -23,9 +18,7 @@ def beamwidth(results):
     maximum_db = np.amax(data)
     print(data.size)
     x = np.linspace(0, 361, 361)
-    x2 = np.linspace(0, 2 * np.pi, 361)
     xvals = np.linspace(0, 361, 1000)
-    xvals2 = np.linspace(0, 2 * np.pi, 1000)
     yinterp = np.interp(xvals, x, data)
     half_power1, halfpower_ind1, half_power2, halfpower_ind2 = find_nearest(yinterp, (maximum_db - 3))
     beamwidth_value = abs(xvals[halfpower_ind1] - xvals[halfpower_ind2])
@@ -38,9 +31,7 @@ def bandwidth_6dB(results):
     data = np.array(results)
     maximum_db = np.amax(data)
     x = np.linspace(0, 361, 361)
-    x2 = np.linspace(0, 2 * np.pi, 361)
     xvals = np.linspace(0, 361, 1000)
-    xvals2 = np.linspace(0, 2 * np.pi, 1000)
     yinterp = np.interp(xvals, x, data)
     bandwidth_power1, bandwidth_ind1, bandwidth_power2, bandwidth_ind2 = find_nearest(yinterp, (maximum_db - 6))
     bandwidth_6dB_value = abs(xvals[bandwidth_ind1] - xvals[bandwidth_ind2])

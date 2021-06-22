@@ -24,7 +24,6 @@ motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=
 
 
 def Measurement_Antenna(frequency, input_power, sample_size):
-    print("Measurement_Antenna start")
     frequency=str(frequency)
     if len(frequency) < 10:
         add_zero = 10 - len(frequency)
@@ -34,13 +33,11 @@ def Measurement_Antenna(frequency, input_power, sample_size):
         frequency = zero + frequency
     p_dbm = []
     voltage_code = attenuator_dac(input_power)
-    print("voltage_code : {} ".format(voltage_code))
     stm32_uart(frequency, voltage_code)
     time.sleep(60)
     angle = 0
     p_dbm.append(cn0150(sample_size=sample_size))
     while angle < 360:
-        print("Angle : {} ".format(angle))
         angle = angle + 1
         motor_rotate(degree=1)
         p_dbm.append(cn0150(sample_size=sample_size))
@@ -93,7 +90,6 @@ def stm32_uart(frequency, input_power):
 
 
 def cn0150(sample_size=100, SLOPE_ADC=-37.494, INTERCEPT=24.662):
-    print("cn0150 inside")
     result_list = []
     bus = 0
     device = 0
@@ -108,7 +104,6 @@ def cn0150(sample_size=100, SLOPE_ADC=-37.494, INTERCEPT=24.662):
         reply = spi.readbytes(2)
         result = reply[0] << 8 | reply[1]
         result_list.append(result)
-    print("sample {}".format(sample_size))
     CODE_OUT = sum(result_list) / len(result_list)
     PIN = (CODE_OUT / SLOPE_ADC) + INTERCEPT
     return PIN
@@ -165,13 +160,9 @@ def attenuator_dac(power_dbm, Vref=3.3):
 def motor_rotate(degree=1):
     encoder_degree = (degree * 2000) / 360
     DELAY = 0.01
-
-    enc.read()
-    motor.onestep()
-    print("motor 1 derece döndü")
-    # while enc.read() <= encoder_degree:
-    #     try:
-    #         motor.onestep()
-    #         time.sleep(DELAY)
-    #     except KeyboardInterrupt:
-    #         motor.release()
+    while enc.read() <= encoder_degree:
+        try:
+            motor.onestep()
+            time.sleep(DELAY)
+        except KeyboardInterrupt:
+            motor.release()

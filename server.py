@@ -13,7 +13,8 @@ def create_app():
     app.add_url_rule("/Calibration_fs", view_func=views.Calibration_fs_page, methods=["GET", "POST"])
     app.add_url_rule("/Calibration_cable", view_func=views.Calibration_cable_page, methods=["GET", "POST"])
     app.add_url_rule("/Process_Measurement", view_func=views.Process_Measurement_page, methods=["GET", "POST"])
-    app.add_url_rule("/data", view_func=views.data_func, methods=["GET", "POST"])
+    app.add_url_rule("/Process_CalibrationCable", view_func=views.Process_CalibrationCable_page, methods=["GET", "POST"])
+    app.add_url_rule("/Process_CalibrationFreeSpace", view_func=views.Process_CalibrationFreeSpace_page, methods=["GET", "POST"])
     return app
 
 

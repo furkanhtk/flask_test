@@ -52,12 +52,4 @@ def get_parameter(session, parameter_id):
     parameter_ = session.query(Parameters).filter_by(id=parameter_id).one()
     return parameter_
 
-if __name__ == "__main__":
-    engine = create_engine('sqlite:///parameters_database.db')
-    Base.metadata.bind = engine
-    DBSession = sessionmaker(bind=engine)
-    session = DBSession()
-    add_parameter(session,"14","14")
-    parameters_list = get_parameters(session)
-    for parameter in parameters_list:
-        print("id:{} F:{} P:{} D:{}".format(parameter.id, parameter.input_frequency, parameter.input_Power, parameter.date))
+
