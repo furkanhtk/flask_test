@@ -23,6 +23,7 @@ def Measurement_Antenna(frequency, input_power, sample_size):
         frequency = zero + frequency
     p_dbm = []
     voltage_code = attenuator_dac(input_power)
+    print("voltage_code : {} ".format(voltage_code))
     stm32_uart(frequency, voltage_code)
     time.sleep(60)
     angle = 0
@@ -81,6 +82,7 @@ def stm32_uart(frequency, input_power):
 
 
 def cn0150(sample_size=100, SLOPE_ADC=-37.494, INTERCEPT=24.662):
+    print("cn0150 inside")
     result_list = []
     bus = 0
     device = 0
