@@ -14,7 +14,7 @@ import Encoder
 
 def Measurement_Antenna(frequency, input_power, sample_size):
     print("Measurement_Antenna start")
-    coils, enc = motor_int()
+    motor, enc = motor_int()
     frequency=str(frequency)
     if len(frequency) < 10:
         add_zero = 10 - len(frequency)
@@ -32,7 +32,7 @@ def Measurement_Antenna(frequency, input_power, sample_size):
     while angle <= 360:
         print("Angle : {} ".format(angle))
         angle = angle + 1
-        motor_rotate(degree=1,coils, enc)
+        motor_rotate(degree=1, motor, enc)
         p_dbm.append(cn0150(sample_size=sample_size))
     return p_dbm
 
@@ -160,17 +160,16 @@ def motor_int():
 
     for coil in coils:
         coil.direction = digitalio.Direction.OUTPUT
+    motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=None)
 
-    return coils,enc
+    return motor,enc
 
 
-def motor_rotate(degree=1, coils, enc):
+def motor_rotate(degree=1 , motor, enc):
     encoder_degree = (degree * 2000) / 360
     DELAY = 0.01
 
     enc.read()
-    motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=None)
-
     motor.onestep()
     print("motor 1 derece döndü")
     # while enc.read() <= encoder_degree:
