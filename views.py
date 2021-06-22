@@ -113,6 +113,8 @@ def parameter_page(parameter_id):
         theta = np.arange(0, 361, 1)
         fig = px.line_polar(r=raw_data, theta=theta, start_angle=0)
         graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+        if parameter is None:
+            print("hata!!!!!!!!!")
         return render_template("parameter.html", parameter=parameter, graphJSON=graphJSON)
     elif parameter.mode == "Calibration Free Space":
         engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
