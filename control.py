@@ -14,7 +14,7 @@ import Encoder
 
 def Measurement_Antenna(frequency, input_power, sample_size):
     print("Measurement_Antenna start")
-    motor, enc = motor_int()
+    motor_value, enc_value = motor_int()
     frequency=str(frequency)
     if len(frequency) < 10:
         add_zero = 10 - len(frequency)
@@ -32,7 +32,7 @@ def Measurement_Antenna(frequency, input_power, sample_size):
     while angle <= 360:
         print("Angle : {} ".format(angle))
         angle = angle + 1
-        motor_rotate(degree=1, motor, enc)
+        motor_rotate(degree=1, motor_value, enc_value)
         p_dbm.append(cn0150(sample_size=sample_size))
     return p_dbm
 
@@ -165,12 +165,12 @@ def motor_int():
     return motor,enc
 
 
-def motor_rotate(degree=1 , motor, enc):
+def motor_rotate(degree=1 , motor_value, enc_value):
     encoder_degree = (degree * 2000) / 360
     DELAY = 0.01
 
-    enc.read()
-    motor.onestep()
+    enc_value.read()
+    motor_value.onestep()
     print("motor 1 derece döndü")
     # while enc.read() <= encoder_degree:
     #     try:
