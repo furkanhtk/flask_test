@@ -21,6 +21,7 @@ def find_nearest(array, value):
 def beamwidth(results):
     data=np.array(results)
     maximum_db=np.amax(data)
+    print(data.size)
     x = np.linspace(0, 361, 361)
     x2 = np.linspace(0, 2*np.pi, 361)
     xvals = np.linspace(0, 361, 1000)
