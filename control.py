@@ -42,7 +42,7 @@ def Measurement_Antenna(frequency, input_power, sample_size):
     while angle <= 360:
         print("Angle : {} ".format(angle))
         angle = angle + 1
-        motor_rotate(degree=1, motor_value, enc_value)
+        motor_rotate(degree=1)
         p_dbm.append(cn0150(sample_size=sample_size))
     return p_dbm
 
