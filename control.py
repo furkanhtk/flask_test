@@ -164,11 +164,11 @@ def motor_int():
     return coils,enc
 
 
-def motor_rotate(degree=1,coils,enc):
+def motor_rotate(degree=1, coils, enc):
     encoder_degree = (degree * 2000) / 360
     DELAY = 0.01
 
-
+    enc.read()
     motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=None)
 
     motor.onestep()
