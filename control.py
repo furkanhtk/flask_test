@@ -165,9 +165,11 @@ def motor_rotate(degree=1):
 
     motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=None)
 
-    while enc.read() <= encoder_degree:
-        try:
-            motor.onestep()
-            time.sleep(DELAY)
-        except KeyboardInterrupt:
-            motor.release()
+    motor.onestep()
+    print("motor 1 derece döndü")
+    # while enc.read() <= encoder_degree:
+    #     try:
+    #         motor.onestep()
+    #         time.sleep(DELAY)
+    #     except KeyboardInterrupt:
+    #         motor.release()
