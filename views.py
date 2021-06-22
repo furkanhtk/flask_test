@@ -107,6 +107,7 @@ def parameter_page(parameter_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     parameter = models.get_parameter(session, parameter_id)
+    print("Here")
     if parameter.mode is "Measurement":
         print("Here")
         raw_data = np.fromstring(parameter.raw_measured_power, dtype=float, sep=',')
