@@ -14,6 +14,7 @@ import Encoder
 
 def Measurement_Antenna(frequency, input_power, sample_size):
     print("Measurement_Antenna start")
+    coils, enc = motor_int()
     frequency=str(frequency)
     if len(frequency) < 10:
         add_zero = 10 - len(frequency)
@@ -31,7 +32,7 @@ def Measurement_Antenna(frequency, input_power, sample_size):
     while angle <= 360:
         print("Angle : {} ".format(angle))
         angle = angle + 1
-        motor_rotate(degree=1)
+        motor_rotate(degree=1,coils, enc)
         p_dbm.append(cn0150(sample_size=sample_size))
     return p_dbm
 
@@ -148,10 +149,7 @@ def attenuator_dac(power_dbm, Vref=3.3):
         voltage_code = zero + voltage_code
     return voltage_code
 
-
-def motor_rotate(degree=1):
-    encoder_degree = (degree * 2000) / 360
-    DELAY = 0.01
+def motor_int():
     enc = Encoder.Encoder(17, 27)
     coils = (
         digitalio.DigitalInOut(board.D19),  # A1
@@ -162,6 +160,14 @@ def motor_rotate(degree=1):
 
     for coil in coils:
         coil.direction = digitalio.Direction.OUTPUT
+
+    return coils,enc
+
+
+def motor_rotate(degree=1,coils,enc):
+    encoder_degree = (degree * 2000) / 360
+    DELAY = 0.01
+
 
     motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=None)
 
