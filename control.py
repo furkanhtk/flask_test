@@ -7,6 +7,17 @@ import digitalio
 from adafruit_motor import stepper
 import Encoder
 
+enc = Encoder.Encoder(17, 27)
+coils = (
+    digitalio.DigitalInOut(board.D19),  # A1
+    digitalio.DigitalInOut(board.D26),  # A2
+    digitalio.DigitalInOut(board.D20),  # B1
+    digitalio.DigitalInOut(board.D21),  # B2
+)
+
+for coil in coils:
+    coil.direction = digitalio.Direction.OUTPUT
+motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=None)
 
 
 
@@ -14,7 +25,6 @@ import Encoder
 
 def Measurement_Antenna(frequency, input_power, sample_size):
     print("Measurement_Antenna start")
-    motor_value, enc_value = motor_int()
     frequency=str(frequency)
     if len(frequency) < 10:
         add_zero = 10 - len(frequency)
@@ -149,28 +159,15 @@ def attenuator_dac(power_dbm, Vref=3.3):
         voltage_code = zero + voltage_code
     return voltage_code
 
-def motor_int():
-    enc = Encoder.Encoder(17, 27)
-    coils = (
-        digitalio.DigitalInOut(board.D19),  # A1
-        digitalio.DigitalInOut(board.D26),  # A2
-        digitalio.DigitalInOut(board.D20),  # B1
-        digitalio.DigitalInOut(board.D21),  # B2
-    )
-
-    for coil in coils:
-        coil.direction = digitalio.Direction.OUTPUT
-    motor = stepper.StepperMotor(coils[0], coils[1], coils[2], coils[3], microsteps=None)
-
-    return motor,enc
 
 
-def motor_rotate(degree=1 , motor_value, enc_value):
+
+def motor_rotate(degree=1):
     encoder_degree = (degree * 2000) / 360
     DELAY = 0.01
 
-    enc_value.read()
-    motor_value.onestep()
+    enc.read()
+    motor.onestep()
     print("motor 1 derece döndü")
     # while enc.read() <= encoder_degree:
     #     try:
