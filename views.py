@@ -36,7 +36,7 @@ def Measurement_page():
         form_antenna_type = request.form["antenna_type"]
         form_mode = request.form["mode"]
         models.add_parameter(session, form_frequency, form_power,form_sample_size, form_g_ref, form_distance, form_antenna_type,form_mode)
-        return redirect(url_for("parameters_page"))
+        return redirect(url_for("Process_Measurement_page"))
 
 
 def Calibration_fs_page():
