@@ -138,6 +138,15 @@ def parameter_page(parameter_id):
         if parameter is None:
             abort(404)
         return render_template("parameter_calibrate.html", parameter=parameter)
+    else:
+        engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
+        Base.metadata.bind = engine
+        DBSession = sessionmaker(bind=engine)
+        session = DBSession()
+        parameter = models.get_parameter(session, parameter_id)
+        if parameter is None:
+            abort(404)
+        return render_template("parameter_calibrate.html", parameter=parameter)
 
 def Process_Measurement_page():
     status = "Measurement started"
