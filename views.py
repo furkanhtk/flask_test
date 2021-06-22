@@ -121,6 +121,7 @@ def parameter_page(parameter_id):
 
 def Process_Measurement_page():
     status = "Measurement started"
+    print(status)
     data_func(status)
     engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
     Base.metadata.bind = engine
@@ -134,9 +135,11 @@ def Process_Measurement_page():
     input_Power=int(parameter.input_Power)
     input_frequency=parse_frequency(parameter.input_Power)
     status = "Parameters received"
+    print(status)
     data_func(status)
     results = control.Measurement_Antenna(input_frequency,input_Power, parameter.sample_size)
     status = "Measurement completed, calculations in progress"
+    print(status)
     data_func(status)
     beamwidth_value, bandwidth_6dB_value, gain, kraus, tai_pereira = calculation.total_calculation(results,input_frequency,input_Power, parameter.gref, parameter.distance)
     beamwidth_value = float(beamwidth_value[0])
@@ -149,6 +152,7 @@ def Process_Measurement_page():
     results_str = str1
     models.add_results(session,id_list[-1],results_str,beamwidth_value, bandwidth_6dB_value, gain, tai_pereira, kraus)
     status = "Measurement complete, calculations complete"
+    print(status)
     data_func(status)
     return render_template("Process_Measurement.html")
 
