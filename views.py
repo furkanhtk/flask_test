@@ -107,16 +107,11 @@ def parameter_page(parameter_id):
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     parameter = models.get_parameter(session, parameter_id)
-    if parameter.mode is "Measurement":
+    if parameter.mode == "Measurement":
         raw_data = np.fromstring(parameter.raw_measured_power, dtype=float, sep=',')
         theta = np.arange(0, 361, 1)
         fig = px.line_polar(r=raw_data, theta=theta, start_angle=0)
         graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-        engine = create_engine('sqlite:///parameters_database.db', connect_args={"check_same_thread": False})
-        Base.metadata.bind = engine
-        DBSession = sessionmaker(bind=engine)
-        session = DBSession()
-        parameter = models.get_parameter(session, parameter_id)
         if parameter is None:
             abort(404)
         return render_template("parameter.html", parameter=parameter,graphJSON=graphJSON)

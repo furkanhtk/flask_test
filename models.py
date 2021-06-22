@@ -4,13 +4,6 @@ from database import Parameters, Base
 import datetime
 
 
-def listToString(results):
-    str1 = ""
-    for ele in results:
-        str1 += str(ele)+","
-    return str1
-
-
 def get_parameters(session):
     parameters_list = session.query(Parameters).all()
     return parameters_list
@@ -25,7 +18,7 @@ def add_parameter(session, freq, pwr,sample_size,g_ref,distance,antenna_type,mod
 
 def add_results(session,id_number,raw_measured_power,beamwidth,bandwidth,antenna_gain,directivity_tai,directivity_kraus):
     edited_parameter = session.query(Parameters).filter_by(id=id_number).one()
-    edited_parameter.raw_measured_power = listToString(raw_measured_power)
+    edited_parameter.raw_measured_power = raw_measured_power
     edited_parameter.beamwidth=beamwidth
     edited_parameter.bandwidth=bandwidth
     edited_parameter.antenna_gain=antenna_gain
