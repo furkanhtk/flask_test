@@ -92,12 +92,12 @@ def cn0150(sample_size=100, SLOPE_ADC=-37.494, INTERCEPT=24.662):
     spi.mode = 0
     msg = [0x01]
     for x in range(sample_size):
-        time.sleep(0.5)
+        time.sleep(0.05)
         spi.writebytes(msg)
         reply = spi.readbytes(2)
         result = reply[0] << 8 | reply[1]
         result_list.append(result)
-        print("sample {}".format(sample_size))
+    print("sample {}".format(sample_size))
     CODE_OUT = sum(result_list) / len(result_list)
     PIN = (CODE_OUT / SLOPE_ADC) + INTERCEPT
     return PIN
@@ -141,7 +141,7 @@ def attenuator_dac(power_dbm, Vref=3.3):
     voltage_code = (voltage * 4096) / Vref
     voltage_code = str(int(voltage_code))
     if len(voltage_code) < 4:
-        add_zero = 10 - len(voltage_code)
+        add_zero = 4 - len(voltage_code)
         zero = ""
         for x in range(add_zero):
             zero = "0" + zero
