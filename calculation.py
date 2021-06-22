@@ -69,8 +69,11 @@ def directivity(beamwidth_angle1,beamwidth_angle2):
 
 
 def total_calculation(results,frequency,input_power,gref,distance):
+    print("calculatin total inside")
     beamwidth_value, half_power1,beamwidth_angle1,half_power2,beamwidth_angle2=beamwidth(results)
+    print("calculating beamwidth")
     bandwidth_6dB_value, bandwidth_power1, bandwidth_angle1, bandwidth_power2, bandwidth_angle2=bandwidth_6dB(results)
+    print("Bandwidth")
     gain=gain_calculator(frequency, input_power, gref, distance,results)
     kraus, tai_pereira=directivity(beamwidth_angle1, beamwidth_angle2)
 
@@ -79,6 +82,7 @@ def total_calculation(results,frequency,input_power,gref,distance):
     bandwidth_6dB_value = float(bandwidth_6dB_value[0])
     kraus = float(kraus[0])
     tai_pereira = float(tai_pereira[0])
+    print("Calculating finished")
 
 
 
